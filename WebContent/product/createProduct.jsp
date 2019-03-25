@@ -13,6 +13,7 @@
 	<form action="${pageContext.request.contextPath}/product/create"
 		method="POST">
 		name: <input type="text" name="nameProduct"> 
+		price: <input type="text" name ="price">
 		category: 
 		
 		<select name="idCategory" >

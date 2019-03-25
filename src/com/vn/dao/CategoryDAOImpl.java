@@ -13,6 +13,7 @@ import com.vn.util.HibernateUtil;
 public class CategoryDAOImpl implements CategoryDAO{
 
 	final static SessionFactory factory = HibernateUtil.getFactory();
+	
 	@Override
 	public List<Category> getAllCategory() {
 		List<Category> categories= null;
@@ -24,7 +25,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 			Transaction tx = session.beginTransaction();
 
 			// 3. query
-			Query q = session.createQuery("FROM Category"); // class Product đại diện cho table
+			Query q = session.createQuery("FROM Category"); // class Category đại diện cho table
 			categories = q.list();
 
 			tx.commit();

@@ -16,7 +16,6 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public List<Product> getAllProduct() {
-
 		List<Product> products = null;
 		try {
 			// 1. create session

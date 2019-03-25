@@ -60,12 +60,13 @@ public class InsertProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		PrintWriter writer = response.getWriter();
-		
+
 		// Product
 		String nameProduct = request.getParameter("nameProduct");
+		double price = Double.parseDouble(request.getParameter("price"));
 		Product product = new Product();
 		product.setName(nameProduct);
+		product.setPrice(price);
 		
 		// Category
 		int idCategory = Integer.parseInt(request.getParameter("idCategory"));

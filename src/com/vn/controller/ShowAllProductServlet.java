@@ -15,11 +15,11 @@ import com.vn.dao.ProductDAOImpl;
 import com.vn.entities.Product;
 
 /**
- * Servlet implementation class HelloServlet
+ * Servlet implementation class ShowAllCategoryServlet
  */
 @WebServlet("/products")
-public class ProductShowAllServlet extends HttpServlet {
-
+public class ShowAllProductServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	ProductDAO productDAOImpl = new ProductDAOImpl();
@@ -27,7 +27,7 @@ public class ProductShowAllServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProductShowAllServlet() {
+	public ShowAllProductServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,8 +45,9 @@ public class ProductShowAllServlet extends HttpServlet {
 		List<Product> products = productDAOImpl.getAllProduct();
 
 		for (Product product : products) {
-			writer.println("<h1>" + product.getName() + "</h1>");
+			writer.print(product.getName()+"</br>");
 		}
+		
 	}
 
 	/**
@@ -58,4 +59,5 @@ public class ProductShowAllServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

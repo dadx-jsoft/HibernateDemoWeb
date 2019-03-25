@@ -1,5 +1,7 @@
 package com.vn.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,20 +15,21 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "ProductDetail")
-public class ProductDetail {
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "product"))
+@Table(name = "product_detail")
+public class ProductDetail implements Serializable {
+	
+	
+	private static final long serialVersionUID = 1L;
+	
+	@GenericGenerator(name = "generator", strategy = "foreign", 
+	parameters = @Parameter(name = "property", value = "product"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	@Column(name = "id")
+	@Column(name = "idProduct")
 	private int id;
-
-	@Column(name = "color")
-	private String color;
-
-	@Column(name = "image")
-	private String image;
-
+	
+	private String content;
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Product product;
@@ -39,20 +42,12 @@ public class ProductDetail {
 		this.id = id;
 	}
 
-	public String getColor() {
-		return color;
+	public String getContent() {
+		return content;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Product getProduct() {
@@ -62,4 +57,5 @@ public class ProductDetail {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
 }
