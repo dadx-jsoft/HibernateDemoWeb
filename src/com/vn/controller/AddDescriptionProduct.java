@@ -27,7 +27,7 @@ public class AddDescriptionProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	ProductDAO productDAOImpl = new ProductDAOImpl();
-	ProductDetailDAO productDetailDAOImpl = new ProductDetailDAOImpl();
+//	ProductDetailDAO productDetailDAOImpl = new ProductDetailDAOImpl();
 	CategoryDAO categoryDAOImpl = new CategoryDAOImpl();
 
 	/**
@@ -80,7 +80,7 @@ public class AddDescriptionProduct extends HttpServlet {
 		productDetail.setProduct(product);
 
 		productDAOImpl.insertProduct(product);
-		productDetailDAOImpl.insertProductDetail(productDetail);
+//		productDetailDAOImpl.insertProductDetail(productDetail);
 	}
 
 }
