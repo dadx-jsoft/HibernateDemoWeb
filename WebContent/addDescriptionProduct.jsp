@@ -5,16 +5,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Java Server Page</title>
+<title>add description</title>
 </head>
-
 <body>
-	<form action="${pageContext.request.contextPath}/product/create"
-		method="POST">
-		name: <input type="text" name="nameProduct"> 
-		price: <input type="text" name ="price">
+Add description: </br>
+	<form action="${pageContext.request.contextPath}/AddDescriptionProduct" method="POST">
+		add Name: <input type="text" name ="nameProduct"> </br>
+		add Price: <input type="text" name ="price"> </br>
+		add Description: <input type="text" name ="description"> </br>
+		add Content: <input type="text" name ="content"> </br>
 		category: 
-		
 		<select name="idCategory" >
 		<%
 			List<Category> categories = (List<Category>) request.getAttribute("categoriesList");
@@ -23,11 +23,8 @@
 			}
 		%>
 		</select>
-		
-		<input type="submit" value="Ok">
-		
-	</form>
-	
+		<input type="submit" value="Ok"> </br>
+	</form> 
 	
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.vn.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,30 +9,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import com.vn.dao.CategoryDAO;
 import com.vn.dao.CategoryDAOImpl;
 import com.vn.dao.ProductDAO;
 import com.vn.dao.ProductDAOImpl;
+import com.vn.dao.ProductDetailDAO;
+import com.vn.dao.ProductDetailDAOImpl;
 import com.vn.entities.Category;
 import com.vn.entities.Product;
-import com.vn.util.HibernateUtil;
+import com.vn.entities.ProductDetail;
 
 /**
- * Servlet implementation class InsertProductServlet
+ * Servlet implementation class AddDescriptionProduct
  */
-@WebServlet("/product/create")
-public class InsertProductServlet extends HttpServlet {
+@WebServlet("/AddDescriptionProduct")
+public class AddDescriptionProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	ProductDAO productDAOImpl = new ProductDAOImpl();
+	ProductDetailDAO productDetailDAOImpl = new ProductDetailDAOImpl();
 	CategoryDAO categoryDAOImpl = new CategoryDAOImpl();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public InsertProductServlet() {
+	public AddDescriptionProduct() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -46,10 +46,10 @@ public class InsertProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		List<Category> categories = categoryDAOImpl.getAllCategory();
-		
+
 		request.setAttribute("categoriesList", categories);
-		
-		request.getRequestDispatcher("createProduct.jsp").forward(request, response);
+
+		request.getRequestDispatcher("addDescriptionProduct.jsp").forward(request, response);
 	}
 
 	/**
@@ -58,22 +58,29 @@ public class InsertProductServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		// Product
 		String nameProduct = request.getParameter("nameProduct");
 		double price = Double.parseDouble(request.getParameter("price"));
+		String description = request.getParameter("description");
+		String content = request.getParameter("content");
+		int idCategory = Integer.parseInt(request.getParameter("idCategory"));
+
+		ProductDetail productDetail = new ProductDetail();
+		productDetail.setDescription(description);
+		productDetail.setContent(content);
+
+		Category category = categoryDAOImpl.findCategoryById(idCategory);
+
 		Product product = new Product();
 		product.setName(nameProduct);
 		product.setPrice(price);
-		
-		// Category
-		int idCategory = Integer.parseInt(request.getParameter("idCategory"));
-		Category category = categoryDAOImpl.findCategoryById(idCategory);
-		
 		product.setCategory(category);
+
+		product.setProductDetail(productDetail);
+
+		productDetail.setProduct(product);
+
 		productDAOImpl.insertProduct(product);
-		// doGet(request, response);
+		productDetailDAOImpl.insertProductDetail(productDetail);
 	}
 
 }

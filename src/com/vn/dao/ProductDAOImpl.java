@@ -111,8 +111,9 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 		return product.getId();
 	}
-
-	public static Product findRecordById(int find_product_id) {
+	
+	@Override
+	public Product findRecordById(int find_product_id) {
 		Product findProductObj = null;
 		try {
 			// 1. create session

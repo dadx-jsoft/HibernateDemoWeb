@@ -7,16 +7,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.vn.entities.Category;
+import com.vn.entities.Product;
+import com.vn.entities.ProductDetail;
 import com.vn.util.HibernateUtil;
 
-public class CategoryDAOImpl implements CategoryDAO{
+public class ProductDetailDAOImpl implements ProductDetailDAO{
 
 	final static SessionFactory factory = HibernateUtil.getFactory();
 	
 	@Override
-	public List<Category> getAllCategory() {
-		List<Category> categories= null;
+	public List<ProductDetail> getAllProductDetail() {
+		List<ProductDetail> productDetails = null;
 		try {
 			// 1. create session
 			Session session = factory.openSession();
@@ -25,21 +26,24 @@ public class CategoryDAOImpl implements CategoryDAO{
 			Transaction tx = session.beginTransaction();
 
 			// 3. query
-			Query q = session.createQuery("FROM Category"); // class Category đại diện cho table
-			categories = q.list();
+			Query q = session.createQuery("FROM ProductDetail"); // class Product đại diện cho table
+			productDetails = q.list();
 
 			tx.commit();
+//			for (Product product : products) {
+//				writer.println("<h1>"+ product.getName() + "</h1>");
+//			}
 
 			// 4. close connect
 			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return categories;
+		return productDetails;
 	}
 
 	@Override
-	public boolean deleteCategory(int idCategory) {
+	public boolean deleteProductDetail(int idProductDetail) {
 		try {
 			// 1. create session
 			Session session = factory.openSession();
@@ -48,9 +52,9 @@ public class CategoryDAOImpl implements CategoryDAO{
 			Transaction tx = session.beginTransaction();
 
 			// 3. delete
-			Category category = findCategoryById(idCategory);
-			session.delete(category);
-			
+			Product product = findRecordById(idProductDetail);
+			session.delete(product);
+
 			// 4. transaction commit
 			tx.commit();
 
@@ -63,7 +67,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 	}
 
 	@Override
-	public boolean updateCategory(Category category) {
+	public boolean updateProductDetail(ProductDetail productDetail) {
 		try {
 			// 1. create session
 			Session session = factory.openSession();
@@ -72,23 +76,22 @@ public class CategoryDAOImpl implements CategoryDAO{
 			Transaction tx = session.beginTransaction();
 
 			// 3. update
-			Category newCategory = (Category) session.get(Category.class, category.getId());
-			newCategory.setName(category.getName());
-            
+			ProductDetail newProductDetail = (ProductDetail) session.get(ProductDetail.class, productDetail.getId());
+			newProductDetail.setContent(productDetail.getContent());;
+
 			// 4. transaction commit
 			tx.commit();
 
 			// 5. close session
 			session.close();
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 
 	@Override
-	public int insertCategory(Category category) {
+	public int insertProductDetail(ProductDetail productDetail) {
 		try {
 			// 1. create session
 			Session session = factory.openSession();
@@ -98,7 +101,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 
 			// 3. insert
 
-			session.save(category);
+			session.save(productDetail);
 			// 4. transaction commit
 			tx.commit();
 
@@ -107,13 +110,12 @@ public class CategoryDAOImpl implements CategoryDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return category.getId();
+		return productDetail.getId();
 	}
-
-	@Override
-	public Category findCategoryById(int find_id) {
-        Category findCategory = null;
-        try {
+	
+	public static Product findRecordById(int find_product_detail_id) {
+		Product findProductObj = null;
+		try {
 			// 1. create session
 			Session session = factory.openSession();
 
@@ -121,8 +123,8 @@ public class CategoryDAOImpl implements CategoryDAO{
 			Transaction tx = session.beginTransaction();
 
 			// 3. find id
-			findCategory = (Category) session.load(Category.class, find_id);
-			
+			findProductObj = (Product) session.load(Product.class, find_product_detail_id);
+
 			// 4. transaction commit
 			tx.commit();
 
@@ -131,6 +133,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return findCategory;
-    }
+		return findProductObj;
+	}
+
 }
